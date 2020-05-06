@@ -13,17 +13,17 @@ pipeline {
                         echo 'I am executing calculator program via piipeline'
                   }
             }
+		stage('Cloning Git') {
+      steps {
+        git 'https://github.com/montsss19/SPE-assignment.git'
+      }
+    }
  
             stage('Build') {
                   steps {
-                        build job: 'SPE_Assignment_Calculator'
+                        sh 'mvn -f pom.xml clean package'
                   }
 		
-            }
-            stage('Test') {
-                  steps {
-                        build job: 'SPE_Assignment_Calculator_Test'
-                  }
             }
 	    stage('Building image') {
       steps{
