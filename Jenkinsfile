@@ -21,7 +21,7 @@ pipeline {
 		post {
                 success {
                     echo "Now Archiving the Artifacts...."
-                    archiveArtifacts artifacts: '**/*.war'
+                    archiveArtifacts artifacts: '**/*.jar'
                 }
             }
             }
@@ -37,7 +37,7 @@ pipeline {
           dockerImageLatest = docker.build registry + ":latest"
         }
       }
-    }
+    }	
     stage('Deploy Image') {
       steps{
         script {
