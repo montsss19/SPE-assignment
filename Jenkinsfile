@@ -18,12 +18,7 @@ pipeline {
                   steps {
                         build job: 'SPE_Assignment_Calculator'
                   }
-		post {
-                success {
-                    echo "Now Archiving the Artifacts...."
-                    archiveArtifacts artifacts: 'Calculator-1.0-SNAPSHOT.jar'
-                }
-            }
+		
             }
             stage('Test') {
                   steps {
