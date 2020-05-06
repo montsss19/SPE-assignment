@@ -27,6 +27,8 @@ pipeline {
             }
 	    stage('Building image') {
       steps{
+		sh "pwd"
+                sh "ls -a"
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
           dockerImageLatest = docker.build registry + ":latest"
