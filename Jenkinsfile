@@ -1,4 +1,10 @@
 pipeline {
+	environment {
+    registry = "Manthan/SPE-Assignment-Image"
+    registryCredential = 'docker-hub-credentials'
+    dockerImage = ''
+    dockerImageLatest = ''
+  }
       agent any
       stages {
             stage('Init') {
@@ -7,6 +13,11 @@ pipeline {
                         echo 'I am executing calculator program via piipeline'
                   }
             }
+    	    stage('Cloning Git') {
+      			steps {
+        			git 'https://github.com/montsss19/SPE-assignment.git'
+      			}
+    		}
             stage('Build') {
                   steps {
                         build job: 'SPE_Assignment_Calculator'
@@ -17,6 +28,29 @@ pipeline {
                         build job: 'SPE_Assignment_Calculator_Test'
                   }
             }
+	    stage('Building image') {
+      steps{
+        script {
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          dockerImageLatest = docker.build registry + ":latest"
+        }
+      }
+    }
+    stage('Deploy Image') {
+      steps{
+        script {
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+            dockerImageLatest.push()
+          }
+        }
+      }
+    }
+    stage('Remove Unused docker image') {
+      steps{
+        sh "docker rmi $registry:$BUILD_NUMBER"
+      }
+    }	
             
       }
 }
