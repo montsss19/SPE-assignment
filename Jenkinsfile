@@ -1,6 +1,6 @@
 pipeline {
 	environment {
-    registry = "Manthan/SPE-Assignment-Image"
+    registry = "manthan/spe-assignment-image"
     registryCredential = 'docker-hub-credentials'
     dockerImage = ''
     dockerImageLatest = ''
