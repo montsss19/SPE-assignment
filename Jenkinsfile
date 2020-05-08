@@ -50,8 +50,6 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }	
-            
-      }
 	stage('Execute Rundeck job') {
         steps {
           script {
@@ -66,4 +64,5 @@ pipeline {
           }
         }
     }
+}
 }
